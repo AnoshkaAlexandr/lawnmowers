@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>Газонокосилки от Ашота</title>
+
+<!-- Bootstrap core CSS -->
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom fonts for this template -->
+<link href="vendor/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
+<link href="vendor/simple-line-icons/css/simple-line-icons.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic"
+	rel="stylesheet" type="text/css">
+
+<!-- Custom styles for this template -->
+<link href="css/landing-page.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+	<!-- Navigation -->
+	<nav class="navbar navbar-light bg-light static-top">
+		<div class="container">
+			<a id="before" class="navbar-brand" href="main"> +374 44 760 38
+				33 </a>
+
+			<button id="forRemove" type="button" class="btn btn-primary"
+				data-toggle="modal" data-target="#loginModal">LogIn</button>
+
+
+		</div>
+	</nav>
+
+	<!-- Masthead -->
+	<header class="masthead text-white text-center">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-9 mx-auto">
+					<h1 class="mb-5">Оставьте свой телефон, и наш менеджер
+						подберет Вам косилку, специально для Вашего газона!</h1>
+				</div>
+				<div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+					<form >
+						<div class="form-row">
+							<div class="col-12 col-md-9 mb-2 mb-md-0">
+								<input type="tel" name="phoneHeder" class="form-control form-control-lg" required 
+									placeholder="Введите свой телефон">
+							</div>
+							<div class="col-12 col-md-3">
+
+								<button type="button" onclick="$.get('mail', { phone: $('input[name=phoneHeder]').val()});" class="btn btn-block btn-lg btn-primary" data-toggle="modal" data-target="#phoneModal"  >Жду
+									звонка!</button>
+									
+
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<!-- Icons Grid -->
+	<section class="features-icons bg-light text-center">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4">
+					<div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+						<div class="features-icons-icon d-flex">
+							<i class="icon-screen-desktop m-auto text-primary"></i>
+						</div>
+						<h3>Консультация</h3>
+						<p class="lead mb-0">Наши менеджены, профессианально владеют
+							предметной областью, вешать Вам лапшу.</p>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+						<div class="features-icons-icon d-flex">
+							<i class="icon-layers m-auto text-primary"></i>
+						</div>
+						<h3>Гарантия</h3>
+						<p class="lead mb-0">Только профессианальные мастера, с
+							радостью починят вам газонокосилку за двойную стоимость.</p>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="features-icons-item mx-auto mb-0 mb-lg-3">
+						<div class="features-icons-icon d-flex">
+							<i class="icon-check m-auto text-primary"></i>
+						</div>
+						<h3>Доставка</h3>
+						<p class="lead mb-0">Вашу косилку доставят в тот же день(к нам
+							на склад)</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-----------------------------------------------------------------------header-->
+
+	<!-- Button trigger modal -->
+
+
+	<!-- Modal login-->
+	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Войти на сайт</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+
+					<form action="login" method="post">
+						<div class="form-group">
+							<label for="exampleInputEmail1">Ваш Логин</label> <input
+								type="text" name="login" class="form-control"
+								id="exampleInputEmail1" aria-describedby="emailHelp"
+								placeholder="Введите свой логин"> <small id="emailHelp"
+								class="form-text text-muted">Логин и пароль нужно
+								вводить латинскими буквами</small>
+						</div>
+						<div class="form-group">
+							<label for="exampleInputPassword1">Ваш Пароль</label> <input
+								type="password" name="password" class="form-control"
+								id="exampleInputPassword1" placeholder="Введите ваш пароль">
+						</div>
+						
+						<button type="submit" class="btn btn-primary">Войти</button>
+					</form>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Закрыть</button>
+ 
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Modal phone-->
+<div class="modal fade" id="phoneModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ожидайте звонка</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <h2>Благодарим за заявку!</h2><p>Наш менеджер свяжется с Вами в ближайшее время.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
