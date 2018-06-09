@@ -13,12 +13,12 @@ import mailSender.Sender;
 @SuppressWarnings("serial")
 @WebServlet("/mail")
 public class SendMail extends HttpServlet {
-	private static final String EMAIL_ADRESS = "nosha.bobruysk@gmail.com";
-	private static final String EMAIL_PASSWORD = "qqq7603833";
+	private static final String EMAIL_ADRESS = "";
+	private static final String EMAIL_PASSWORD = "";
 	private static final String EMAIL_TITLE = "Письмо с сайта газонокосилок";
 
-	private static final String ADRESS_OUTBOX = "nosha.bobruysk@gmail.com";
-	private static final String ADRESS_INBOX = "nosha_bobruysk@mail.ru";
+	private static final String ADRESS_OUTBOX = "";
+	private static final String ADRESS_INBOX = "";
 
 	private Sender sslSender;
 
