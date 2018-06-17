@@ -5,12 +5,13 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import dao.IProductDao;
-import dao.impl.List.ProductDaoInList;
+import dao.impl.inMemory.ProductDaoInMemory;
 import domain.Product;
+import exception.DaoException;
 
 public class ProductDaoTest {
 
-	IProductDao productDao = ProductDaoInList.getImplementation();
+	IProductDao productDao = ProductDaoInMemory.getImplementation();
 	
 	Product product;
 	
@@ -19,18 +20,18 @@ public class ProductDaoTest {
 	}
 	
 	@Test
-	public void testAdded() {
+	public void testAdded() throws DaoException {
 		init();
 		assertTrue(productDao.add(product));
 	}
 	
 	@Test
-	public void testLoadAll() {
+	public void testLoadAll() throws DaoException {
 		assertTrue(productDao.loadAll() != null);
 	}
 	
 	@Test
-	public void testRemove() {
+	public void testRemove() throws DaoException {
 		init();
 		assertTrue(productDao.add(product));
 		assertTrue(productDao.remove(product));

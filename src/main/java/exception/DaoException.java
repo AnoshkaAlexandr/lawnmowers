@@ -1,7 +1,7 @@
 package exception;
 
 @SuppressWarnings("serial")
-public class DaoException extends SecurityException {
+public class DaoException extends ProductException {
 
 	
 	private Exception hiddenException;

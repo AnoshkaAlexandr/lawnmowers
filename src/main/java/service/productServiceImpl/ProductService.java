@@ -6,6 +6,8 @@ import org.apache.log4j.Logger;
 
 import dao.IProductDao;
 import domain.Product;
+import exception.DaoException;
+import exception.ServiceException;
 import service.IProductService;
 
 public class ProductService implements IProductService {
@@ -18,15 +20,19 @@ public class ProductService implements IProductService {
 	}
 
 	@Override
-	public boolean saveOrUpdate(Product addObject) {
+	public boolean saveOrUpdate(Product addObject) throws ServiceException {
 		if (addObject != null) {
 			if (addObject.getId() != 0) {
-				// todo implements update product
 				logger.warn("Product is null");
 				return false;
 
 			} else {
-				productController.add(addObject);
+				try {
+					productController.add(addObject);
+				} catch (DaoException e) {
+					logger.error("Can't add product " + e.getMessage(), e);
+					throw new ServiceException("Can't add products " + e.getMessage(), e);
+				}
 				logger.info("Product is added");
 				return true;
 			}
@@ -36,9 +42,14 @@ public class ProductService implements IProductService {
 	}
 
 	@Override
-	public boolean remove(Product removeObject) {
+	public boolean remove(Product removeObject) throws ServiceException {
 		if (removeObject != null) {
-			productController.remove(removeObject);
+			try {
+				productController.remove(removeObject);
+			} catch (DaoException e) {
+				logger.error("Can't remove products " + e.getMessage(), e);
+				throw new ServiceException("Can't remove products " + e.getMessage(), e);
+			}
 			logger.info("Product was removed");
 			return true;
 		}
@@ -46,9 +57,14 @@ public class ProductService implements IProductService {
 	}
 
 	@Override
-	public List<Product> loadAll() {
+	public List<Product> loadAll() throws ServiceException {
 
-		return productController.loadAll();
+		try {
+			return productController.loadAll();
+		} catch (DaoException e) {
+			logger.error("Can't get products " + e.getMessage(), e);
+			throw new ServiceException("Can't get products " + e.getMessage(), e);
+		}
 	}
 
 }

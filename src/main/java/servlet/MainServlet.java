@@ -10,12 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import dao.impl.mysql.ProductDaoMysql;
 import domain.Product;
+import exception.ServiceException;
 import reader.HtmlReader;
 import service.IProductService;
 import service.productServiceImpl.ProductService;
@@ -23,7 +25,7 @@ import service.productServiceImpl.ProductService;
 @SuppressWarnings("serial")
 @WebServlet("/main")
 public class MainServlet  extends HttpServlet{
-	
+	private static final Logger logger = Logger.getLogger(MainServlet.class);
 	IProductService productController = new ProductService(ProductDaoMysql.getImpl());
 	
 	 List<Product> allProduct ;
@@ -32,7 +34,12 @@ public class MainServlet  extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		HttpSession session = req.getSession();
-		allProduct = productController.loadAll();
+		try {
+			allProduct = productController.loadAll();
+		} catch (ServiceException e) {
+			logger.error("Can't get products " + e.getMessage(), e);
+			e.printStackTrace();
+		}
 		
 		if(session.getAttribute("user")!= null && session.getAttribute("user").equals("admin")) {
 			Document doc = Jsoup.parse(HtmlReader.getHeader());
@@ -47,7 +54,6 @@ public class MainServlet  extends HttpServlet{
 
 		}
 
-		//resp.setContentType("text/html; charset=UTF-8");
 		
 		resp.getWriter().println(HtmlReader.getHeader());
 		resp.getWriter().append("\n" + 

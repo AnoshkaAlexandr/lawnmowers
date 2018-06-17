@@ -1,12 +1,12 @@
 package exception;
 
 @SuppressWarnings("serial")
-public class ServiceException extends ProductException{
+public class ServiceException extends ProductException {
 
 	private Exception hiddenException;
 
-	public ServiceException(String msg) {
-		super(msg);
+	public ServiceException(Throwable cause) {
+		super(cause);
 	}
 
 	public ServiceException(String msg, Exception e) {
@@ -14,11 +14,11 @@ public class ServiceException extends ProductException{
 		hiddenException = e;
 	}
 
+	public ServiceException(String msg) {
+		super(msg);
+	}
+
 	public Exception getHiddenException() {
 		return hiddenException;
 	}
 }
-
-	
-	
-

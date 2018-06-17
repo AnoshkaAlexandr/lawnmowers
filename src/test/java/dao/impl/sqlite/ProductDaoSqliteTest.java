@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import dao.IProductDao;
 import domain.Product;
+import exception.DaoException;
 
 public class ProductDaoSqliteTest {
 	IProductDao productController = ProductDaoSqlite.getImpl();
@@ -16,19 +17,19 @@ public class ProductDaoSqliteTest {
 	}
 
 	@Test
-	public void testAdd() {
+	public void testAdd() throws DaoException {
 		init();
 		assertTrue(productController.add(product));
 	}
 	
 	@Test
-	public void testLoadAll() {
+	public void testLoadAll() throws DaoException {
 		
 		assertTrue(productController.loadAll() != null);
 	}
 
 	@Test
-	public void testRemove() {
+	public void testRemove() throws DaoException {
 		init();
 		assertTrue(productController.add(product));
 		assertTrue(productController.remove(product));

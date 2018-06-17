@@ -1,7 +1,16 @@
 package service;
 
-import domain.Product;
+import java.util.List;
 
-public interface IProductService extends IGenericService<Product>{
+import domain.Product;
+import exception.ServiceException;
+
+public interface IProductService {
+
+	boolean saveOrUpdate(Product addObject) throws ServiceException;
+
+	boolean remove(Product removeObject)  throws ServiceException;
+
+	List<Product> loadAll()  throws ServiceException;
 
 }

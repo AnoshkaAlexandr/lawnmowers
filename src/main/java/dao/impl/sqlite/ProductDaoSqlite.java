@@ -27,21 +27,24 @@ public class ProductDaoSqlite implements IProductDao {
 
 	private static ProductDaoSqlite pcsqlite;
 
-	private ProductDaoSqlite() {
+	private ProductDaoSqlite() throws DaoException {
 		createConnection();
-
 
 	}
 
 	public static ProductDaoSqlite getImpl() {
 		if (pcsqlite == null) {
-			pcsqlite = new ProductDaoSqlite();
+			try {
+				pcsqlite = new ProductDaoSqlite();
+			} catch (DaoException e) {
+				logger.error("Can't create implementation" + e.getMessage(), e);
+			}
 		}
 		return pcsqlite;
 	}
 
 	@Override
-	public List<Product> loadAll() {
+	public List<Product> loadAll() throws DaoException {
 		List<Product> products = new ArrayList<>();
 		try {
 			ResultSet rs = stmt.executeQuery(SQL_SELECT_ALL);
@@ -65,59 +68,48 @@ public class ProductDaoSqlite implements IProductDao {
 	}
 
 	@Override
-	public boolean add(Product product) {
-		if (product != null) {
+	public boolean add(Product product) throws DaoException {
 
-			try {
+		try {
 
-				stmt = connection.createStatement();
-				String sql = "INSERT INTO PRODUCT (NAME,DESCRIPTION,LINK,PRICE) " + "VALUES ( '" + product.getName()
-						+ "', '" + product.getDescription() + "', '" + product.getImgLink() + "', " + product.getCost()
-						+ ");";
-				stmt.executeUpdate(sql);
-
-			}
-
-			catch (SQLException e) {
-				logger.error("From add product " + e.getMessage(), e);
-				throw new DaoException("From add product " + e.getMessage(), e);
-			}
-
-			return true;
-		} else
-
-		{
-			logger.error("Product by add is null ");
-			return false;
+			stmt = connection.createStatement();
+			String sql = "INSERT INTO PRODUCT (NAME,DESCRIPTION,LINK,PRICE) " + "VALUES ( '" + product.getName()
+					+ "', '" + product.getDescription() + "', '" + product.getImgLink() + "', " + product.getCost()
+					+ ");";
+			stmt.executeUpdate(sql);
 
 		}
+
+		catch (SQLException e) {
+			logger.error("From add product " + e.getMessage(), e);
+			throw new DaoException("From add product " + e.getMessage(), e);
+		}
+
+		return true;
+
 	}
 
 	@Override
 	public boolean remove(Product product) {
-		if (product != null) {
-			try {
-				String sql = "DELETE from PRODUCT where ID=" + product.getId() + ";";
-				stmt.executeUpdate(sql);
-			} catch (Exception e) {
-				logger.error("From remove " + e.getMessage(), e);
-			}
-			return true;
-		} else {
-			logger.error("Product by remove is null ");
-			return false;
 
+		try {
+			String sql = "DELETE from PRODUCT where ID=" + product.getId() + ";";
+			stmt.executeUpdate(sql);
+		} catch (Exception e) {
+			logger.error("From remove " + e.getMessage(), e);
 		}
+		return true;
+
 	}
 
-	private void createConnection() {
+	private void createConnection() throws DaoException {
 
 		if (connection == null) {
 			try {
 				Class.forName("org.sqlite.JDBC");
-				//logger.warn("jdbc:sqlite:" + path + "site.db");
+				// logger.warn("jdbc:sqlite:" + path + "site.db");
 				connection = DriverManager.getConnection("jdbc:sqlite:" + path + "site.db");
-logger.info("Open connection sqlite");
+				logger.info("Open connection sqlite");
 				connection.setAutoCommit(false);
 
 				stmt = connection.createStatement();
@@ -129,7 +121,7 @@ logger.info("Open connection sqlite");
 		}
 	}
 
-	void closeConnection(Connection con, Statement st) {
+	void closeConnection(Connection con, Statement st) throws DaoException {
 
 		try {
 			st.close();

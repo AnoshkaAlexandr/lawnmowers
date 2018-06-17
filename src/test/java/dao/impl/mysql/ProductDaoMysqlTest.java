@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import dao.IProductDao;
 import domain.Product;
+import exception.DaoException;
 
 public class ProductDaoMysqlTest {
 
@@ -18,21 +19,21 @@ public class ProductDaoMysqlTest {
 	}
 	
 	@Test
-	public void testAdd() {
+	public void testAdd() throws DaoException {
 		init();
 		assertTrue(productDao.add(product));
 		productDao.remove(product);
 	}
 
 	@Test
-	public void testRemove() {
+	public void testRemove() throws DaoException {
 		init();
 		productDao.add(product);
 		assertTrue(productDao.remove(product));
 	}
 
 	@Test
-	public void loagAll() {
+	public void loagAll() throws DaoException {
 		init();
 		productDao.add(product);
 		assertTrue(productDao.loadAll() != null);
