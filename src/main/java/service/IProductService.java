@@ -6,6 +6,7 @@ import domain.Product;
 import exception.ServiceException;
 
 public interface IProductService {
+	Product getById(int id) throws  ServiceException;
 
 	boolean saveOrUpdate(Product addObject) throws ServiceException;
 

@@ -7,6 +7,9 @@ import domain.Product;
 import exception.DaoException;
 
 public interface IProductDao {
+	Product getById(int id) throws DaoException;
+
+	boolean edit(Product editObject) throws DaoException;
 
 	boolean add(Product addObject) throws DaoException;
 

@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.impl.sqlite.ProductDaoSqlite;
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -26,13 +28,24 @@ import service.productServiceImpl.ProductService;
 @WebServlet("/main")
 public class MainServlet  extends HttpServlet{
 	private static final Logger logger = Logger.getLogger(MainServlet.class);
-	IProductService productController = new ProductService(ProductDaoMysql.getImpl());
+	IProductService productController = new ProductService(ProductDaoSqlite.getImpl());
+	ServletContext context =null;
 	
 	 List<Product> allProduct ;
-	
+
+	@Override
+	public void init() throws ServletException {
+		context = getServletContext();
+		context.setAttribute("productController", productController);
+
+
+	}
+
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+
+
 		HttpSession session = req.getSession();
 		try {
 			allProduct = productController.loadAll();

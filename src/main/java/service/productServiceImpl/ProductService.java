@@ -12,59 +12,81 @@ import service.IProductService;
 
 public class ProductService implements IProductService {
 
-	private static final Logger logger = Logger.getLogger(ProductService.class);
-	private IProductDao productController;
+    private static final Logger logger = Logger.getLogger(ProductService.class);
+    private IProductDao productController;
 
-	public ProductService(IProductDao productController) {
-		this.productController = productController;
-	}
+    public ProductService(IProductDao productController) {
+        this.productController = productController;
+    }
 
-	@Override
-	public boolean saveOrUpdate(Product addObject) throws ServiceException {
-		if (addObject != null) {
-			if (addObject.getId() != 0) {
-				logger.warn("Product is null");
-				return false;
+    @Override
+    public Product getById(int id) throws ServiceException {
 
-			} else {
-				try {
-					productController.add(addObject);
-				} catch (DaoException e) {
-					logger.error("Can't add product " + e.getMessage(), e);
-					throw new ServiceException("Can't add products " + e.getMessage(), e);
-				}
-				logger.info("Product is added");
-				return true;
-			}
-		} else {
-			return false;
-		}
-	}
+        if (id < 1) {
+            return null;
+        }
 
-	@Override
-	public boolean remove(Product removeObject) throws ServiceException {
-		if (removeObject != null) {
-			try {
-				productController.remove(removeObject);
-			} catch (DaoException e) {
-				logger.error("Can't remove products " + e.getMessage(), e);
-				throw new ServiceException("Can't remove products " + e.getMessage(), e);
-			}
-			logger.info("Product was removed");
-			return true;
-		}
-		return false;
-	}
+        try {
+            return productController.getById(id);
 
-	@Override
-	public List<Product> loadAll() throws ServiceException {
+        } catch (DaoException e) {
+            logger.error("Can't get product by id " + e.getMessage(), e);
+            throw new ServiceException("Can't get product by id " + e.getMessage(), e);
+        }
+    }
 
-		try {
-			return productController.loadAll();
-		} catch (DaoException e) {
-			logger.error("Can't get products " + e.getMessage(), e);
-			throw new ServiceException("Can't get products " + e.getMessage(), e);
-		}
-	}
+    @Override
+    public boolean saveOrUpdate(Product addObject) throws ServiceException {
+        if (addObject != null) {
+            if (addObject.getId() != 0) {
+                try {
+                    productController.edit(addObject);
+                } catch (DaoException e) {
+                    logger.error("Can't edit product " + e.getMessage(), e);
+                    throw new ServiceException("Can't edit product " + e.getMessage(), e);
+                }
+                logger.warn("Product is edited");
+                return true;
+
+            } else {
+                try {
+                    productController.add(addObject);
+                } catch (DaoException e) {
+                    logger.error("Can't add product " + e.getMessage(), e);
+                    throw new ServiceException("Can't add products " + e.getMessage(), e);
+                }
+                logger.info("Product is added");
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean remove(Product removeObject) throws ServiceException {
+        if (removeObject != null) {
+            try {
+                productController.remove(removeObject);
+            } catch (DaoException e) {
+                logger.error("Can't remove products " + e.getMessage(), e);
+                throw new ServiceException("Can't remove products " + e.getMessage(), e);
+            }
+            logger.info("Product was removed");
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public List<Product> loadAll() throws ServiceException {
+
+        try {
+            return productController.loadAll();
+        } catch (DaoException e) {
+            logger.error("Can't get products " + e.getMessage(), e);
+            throw new ServiceException("Can't get products " + e.getMessage(), e);
+        }
+    }
 
 }

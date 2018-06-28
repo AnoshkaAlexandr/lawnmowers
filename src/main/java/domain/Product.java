@@ -7,6 +7,8 @@ public class Product {
 	private String imgLink;
 	private int cost;
 
+	public Product(){}
+
 	public Product(String name, String description, String imgLink, int cost) {
 	
 		this.name = name;

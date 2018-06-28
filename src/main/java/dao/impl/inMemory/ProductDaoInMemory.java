@@ -2,6 +2,8 @@ package dao.impl.inMemory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 
@@ -54,6 +56,21 @@ public class ProductDaoInMemory implements IProductDao {
 		} else {
 			return allProduct;
 		}
+	}
+
+	@Override
+	public Product getById(int id) throws DaoException {
+		return allProduct.stream()
+				.filter(product -> product.getId() == id)
+				.collect(Collectors.toList())
+				.get(0);
+	}
+
+	@Override
+	public boolean edit(Product editObject) throws DaoException {
+		Product product = getById(editObject.getId());
+		product  = editObject;
+		return true;
 	}
 
 	@Override
